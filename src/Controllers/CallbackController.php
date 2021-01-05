@@ -410,9 +410,7 @@ class CallbackController extends Controller
                         }
 
                         $this->paymentHelper->createPlentyPayment($paymentData);
-                        if($this->aryCaptureParams['tid_status'] != '100') {
-							$this->paymentHelper->updateOrderStatus($nnTransactionHistory->orderNo, $orderStatus);
-						}
+                        
                         $this->paymentHelper->updatePayments($this->aryCaptureParams['tid'], $this->aryCaptureParams['tid_status'], $nnTransactionHistory->orderNo);
                         $this->sendCallbackMail($callbackComments);
 
@@ -492,10 +490,7 @@ class CallbackController extends Controller
                                         }
                                         $this->paymentHelper->createPlentyPayment($paymentData);
                     }
-                    if($this->aryCaptureParams['tid_status'] != '100') 
-                    {
-						$this->paymentHelper->updateOrderStatus($nnTransactionHistory->orderNo, (float)$orderStatus);
-					}
+                    
                      $this->paymentHelper->updatePayments($this->aryCaptureParams['tid'], $this->aryCaptureParams['tid_status'], $nnTransactionHistory->orderNo);
                      $this->sendCallbackMail($callbackComments); 
 		             return $this->renderTemplate($callbackComments);

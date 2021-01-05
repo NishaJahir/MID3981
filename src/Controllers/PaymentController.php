@@ -26,7 +26,7 @@ use Novalnet\Services\PaymentService;
 use Plenty\Plugin\Templates\Twig;
 use Plenty\Plugin\ConfigRepository;
 use Novalnet\Services\TransactionService;
-
+use Plenty\Plugin\Log\Loggable;
 /**
  * Class PaymentController
  *
@@ -34,7 +34,7 @@ use Novalnet\Services\TransactionService;
  */
 class PaymentController extends Controller
 {
-    
+    use Loggable;
     /**
      * @var Request
      */
@@ -128,6 +128,7 @@ class PaymentController extends Controller
      */
     public function paymentResponse() {
         $responseData = $this->request->all();
+	    $this->getLogger(__METHOD__)->error('payment response', $responseData);
         $isPaymentSuccess = isset($responseData['status']) && in_array($responseData['status'], ['90','100']);
         $notificationMessage = $this->paymentHelper->getNovalnetStatusText($responseData);
         if ($isPaymentSuccess) {
@@ -232,6 +233,7 @@ class PaymentController extends Controller
     public function redirectPayment()
     {
         $paymentRequestData = $this->sessionStorage->getPlugin()->getValue('nnPaymentData');
+	    $this->getLogger(__METHOD__)->error('redirect payment', $paymentRequestData);
         $orderNo = $this->sessionStorage->getPlugin()->getValue('nnOrderNo');
         $paymentRequestData['order_no'] = $orderNo;
         $paymentUrl = $this->sessionStorage->getPlugin()->getValue('nnPaymentUrl');

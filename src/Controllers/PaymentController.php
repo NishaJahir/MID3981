@@ -244,9 +244,7 @@ class PaymentController extends Controller
                                                                'formData'     => $paymentRequestData,
                                                                 'nnPaymentUrl' => $paymentUrl
                                    ]);
-        } else {			
-			return $this->response->redirectTo('confirmation');
-		  }
+        }
     }
     
 }

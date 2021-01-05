@@ -225,9 +225,7 @@ class PaymentService
             }
         
             $this->paymentHelper->createPlentyPayment($requestData);
-            if($requestData['tid_status'] != '100') {
-				$this->paymentHelper->updateOrderStatus((int)$requestData['order_no'], $requestData['order_status']);
-			}
+            
            
             return [
                 'type' => 'success',
